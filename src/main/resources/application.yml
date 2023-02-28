@@ -58,6 +58,6 @@ file:
 
 
 sentry:
-  dsn: https://6f277ce883c140f4a2e0a5a91927735a@o4504710969556992.ingest.sentry.io/4504710976241664
+  dsn: ####
 
 
