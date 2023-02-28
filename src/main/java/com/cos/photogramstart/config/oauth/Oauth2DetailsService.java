@@ -35,7 +35,7 @@ public class Oauth2DetailsService extends DefaultOAuth2UserService {
         String password=new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
 
         User userEntity = userRepository.findByUsername(username);
-
+        System.out.println(oAuth2User.getAttributes());
         if(userEntity==null) {//페이스북 최초 로그인
             User user=User.builder()
                     .username(username)

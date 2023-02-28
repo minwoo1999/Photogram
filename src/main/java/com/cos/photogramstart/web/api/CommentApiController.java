@@ -6,6 +6,7 @@ import com.cos.photogramstart.domain.Comment.Comment;
 import com.cos.photogramstart.handler.ex.CustomVaildationApiException;
 import com.cos.photogramstart.handler.ex.CustomVaildationException;
 import com.cos.photogramstart.service.CommentService;
+import com.cos.photogramstart.web.api.dto.CommentResDto;
 import com.cos.photogramstart.web.dto.CMResDto;
 import com.cos.photogramstart.web.dto.comment.CommentDto;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,8 @@ public class CommentApiController {
                                          BindingResult bindingResult,
                                          @AuthenticationPrincipal PrincipalDetails principalDetails){
 
-        Comment comment = commentService.applywrite(commentDto.getContent(), commentDto.getImageId(), principalDetails.getUser().getId());//content,imageId,userId
-        return new ResponseEntity<>(new CMResDto<>(1,"댓글쓰기성공",comment), HttpStatus.CREATED);
+        CommentResDto commentResDto = commentService.applywrite(commentDto.getContent(), commentDto.getImageId(), principalDetails.getUser().getId());//content,imageId,userId
+        return new ResponseEntity<>(new CMResDto<>(1,"댓글쓰기성공",commentResDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/api/comment/{id}")

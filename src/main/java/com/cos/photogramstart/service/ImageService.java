@@ -4,20 +4,22 @@ import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.image.ImageRepository;
 import com.cos.photogramstart.handler.ex.CustomVaildationException;
+import com.cos.photogramstart.web.api.dto.ImageResDto;
 import com.cos.photogramstart.web.dto.Image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.jni.File;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,27 +27,46 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
 
+    private final EntityManager em;
+
     @Value("${file.path}")
     private String uploadFolder;
 
     @Transactional(readOnly = true)
-    public Page<Image> imageStory(long principalId, Pageable pageable){
+    public List<Image> imageStory(long principalId, int offset,int limit){
 
-        Page<Image> images = imageRepository.mStory(principalId,pageable);
+//        Page<Image> images = imageRepository.mStory(principalId,pageable);
+//
+//        //images에 좋아요 상태 담기
+//        images.forEach((image)-> {
+//
+//            image.setLikeCount(image.getLikes().size());
+//
+//            image.getLikes().forEach((like)->{
+//                if(like.getUser().getId() == principalId) {
+//                    image.setLikeState(true);
+//                }
+//            });
+//        });
+        List<Image> resultList = em.createQuery("select i from Image i" +
+                " join fetch i.user u", Image.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
 
-        //images에 좋아요 상태 담기
-        images.forEach((image)-> {
+        resultList.forEach((image)-> {
 
             image.setLikeCount(image.getLikes().size());
 
             image.getLikes().forEach((like)->{
                 if(like.getUser().getId() == principalId) {
-                    image.setLikeState(true);
+                    image.setLikeState("true");
                 }
             });
         });
 
-        return images;
+
+        return resultList;
 
     }
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +31,9 @@
                             <button>로그인</button>
                         </form>
                         <!--로그인 인풋end-->
+                       <c:if test="${error}">
+                           <p class="exception">${exception}</p>
+                       </c:if>
                         
                         <!-- 또는 -->
                         <div class="login__horizon">

@@ -2,14 +2,21 @@ package com.cos.photogramstart.handler.aop;
 
 import com.cos.photogramstart.handler.ex.CustomVaildationApiException;
 import com.cos.photogramstart.handler.ex.CustomVaildationException;
+import io.sentry.Sentry;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,11 +25,29 @@ import java.util.Map;
 @Aspect //aop 처리를 할수있는 핸들러
 public class ValidationAdvice {
 
+       private static final Logger log= LoggerFactory.getLogger(ValidationAdvice.class);
+
+//
+//    @Before("execution(* com.cos.photogramstart.web.api.*Controller.*(..))")
+//    public void testCheck(){
+//        // 어디서든지 요청을 받아올수있음
+//        HttpServletRequest request= ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+//
+//
+//    }
+
+
+
+
     // web 패키지에서 Controller로 끝나는 모든클래스에서 모든 메서드의 파라미터가 뭐든상관없는거를 호출
     @Around("execution(* com.cos.photogramstart.web.api.*Controller.*(..))")
     public Object apiAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         System.out.println("web api 컨틀롤러==============");
+
+        String type=proceedingJoinPoint.getSignature().getDeclaringTypeName();
+        String method=proceedingJoinPoint.getSignature().getName();
+
         Object [] args=proceedingJoinPoint.getArgs();
         for (Object arg:args){
             if (arg instanceof BindingResult){
@@ -33,6 +58,9 @@ public class ValidationAdvice {
 
                     for(FieldError error:bindingResult.getFieldErrors()){
                         errorMap.put(error.getField(), error.getDefaultMessage());
+
+                        log.warn(type+"."+method+"() => 필드:"+error.getField()+"메세지"+error.getDefaultMessage());
+                        Sentry.captureMessage(type+"."+method+"() => 필드:"+error.getField()+"메세지"+error.getDefaultMessage());
                     }
                     throw new CustomVaildationApiException("유효성검사 실패함",errorMap);
                 }
@@ -48,6 +76,10 @@ public class ValidationAdvice {
         // ProceedingJoinPoint 는  컨트롤러 메소드안에 접근할수있는 권한을 만듬
 
         System.out.println("web 컨틀롤러==============");
+
+        String type=proceedingJoinPoint.getSignature().getDeclaringTypeName();
+        String method=proceedingJoinPoint.getSignature().getName();
+
         Object [] args=proceedingJoinPoint.getArgs();
         for (Object arg:args){
             if (arg instanceof BindingResult){
@@ -56,6 +88,8 @@ public class ValidationAdvice {
                     Map<String,String> errorMap=new HashMap<>();
                     for(FieldError error:bindingResult.getFieldErrors()){
                         errorMap.put(error.getField(),error.getDefaultMessage());
+                        log.warn(type+"."+method+"() => 필드:"+error.getField()+"메세지"+error.getDefaultMessage());
+                        Sentry.captureMessage(type+"."+method+"() => 필드:"+error.getField()+"메세지"+error.getDefaultMessage());
                     }
                     throw new CustomVaildationException("유효성검사 실패함",errorMap);
                 }

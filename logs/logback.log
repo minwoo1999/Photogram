@@ -1,0 +1,2 @@
+[2023-02-20 14:02:57:18757][http-nio-8080-exec-6] WARN  c.c.p.handler.aop.ValidationAdvice - com.cos.photogramstart.web.AuthController.signup() => 필드:username메세지크기가 2에서 20 사이여야 합니다
+[2023-02-20 15:57:21:60361][http-nio-8080-exec-4] WARN  c.c.p.handler.aop.ValidationAdvice - com.cos.photogramstart.web.AuthController.signup() => 필드:username메세지크기가 2에서 20 사이여야 합니다

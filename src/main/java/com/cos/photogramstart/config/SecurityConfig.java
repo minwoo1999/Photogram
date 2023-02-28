@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @RequiredArgsConstructor
 @EnableWebSecurity // 해당파일로 시큐리티를 활성화
@@ -20,6 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    private final AuthenticationFailureHandler customAuthFailureHandler;
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -30,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()//위에있는 url말고 다른곳에 들어갈 경우 loginPage로 redirect시킴
                 .loginPage("/auth/signin")//get
                 .loginProcessingUrl("/auth/signin")//post-> 스프링 시큐리티가 로그인 프로세스진행
+                .failureHandler(customAuthFailureHandler)  //로그인 실패시 이를 처리할 핸들러
                 .defaultSuccessUrl("/")
                 .and()
                 .oauth2Login()// form 로그인을 포함하여 oauth2 로그인도 할거임

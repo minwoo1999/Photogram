@@ -13,10 +13,16 @@ public class ImageUploadDto {
     private MultipartFile file;
     private String caption;
 
+    private long likeCount;
+
+    private String likeState;
+
 
     public Image toEntity(String postImageUrl, User user){
         return Image.builder()
                 .caption(caption)
+                .likeState("0")
+                .likeCount(0)
                 .postImageUrl(postImageUrl)
                 .user(user)
                 .build();

@@ -15,7 +15,7 @@ import java.util.List;
 // JPA -java persistance api (자바로 데이터를 영구적으로 저장할수있는 api제공)
 
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
 @Builder
@@ -42,7 +42,7 @@ public class User {
     private String role; //권한
 
     //User를 Select 할때 해당 UserId로 등록된 image들을 다 가져와
-    @JsonIgnore
+
     @OneToMany(mappedBy = "user") //나는 연관관계의 주인이 아니다. 그러므로 테이블에 컬럼을 만들지마
     private List<Image> images=new ArrayList<>();
 

@@ -17,12 +17,12 @@ let page=0;
 // (1) 스토리 로드하기
 function storyLoad() {
  $.ajax({
-	 url:"/api/image?page="+page,
+	 url:"/api/image?offset="+page+"&limit="+2, // 한 페이지에 3개의 게시물만 나오게해라
 	 dataType:"json",
  }).done(res=>{
-	 console.log(res.data.content);
+	 console.log(res);
 
-	 res.data.content.forEach((image)=>{
+	 res.data.forEach((image)=>{
 		 let storyItem=getStoryItem(image);
 		 $("#storyList").append(storyItem);
 	 });
@@ -52,7 +52,7 @@ function getStoryItem(image) {
 		<!-- 하트모양 버튼 박스 -->
 		<div class="sl__item__contents__icon"> `
 	;
-	if (image.likeState==true) {
+	if (image.likeState=="true") {
 		result += `<button onclick="toggleLike(${image.id}, this)">
 							<i class="fas fa-heart active" id="storyLikeIcon-${image.id}"></i>
 						</button>`;
@@ -93,12 +93,12 @@ function getStoryItem(image) {
 	image.comments.forEach((comment) => {
 		result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"">
 			    <p>
-			      <b>${comment.user.username} :</b>
+			      <b>${comment.username} :</b>
 			      ${comment.content}
 			    </p>
   				`;
 
-		if (principalId == comment.user.id) {
+		if (principalId == comment.userId) {
 			result += `
   				    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
   				`;
@@ -130,7 +130,7 @@ $(window).scroll(() => {
 	let checkNum=$(window).scrollTop()-($(document).height()-$(window).height());
 
 	if(checkNum<10 && checkNum>-10){
-		page++;
+		page+=2;
 		storyLoad();
 	}
 });
@@ -211,7 +211,7 @@ function addComment(imageId) {
 		let content = `
 			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}""> 
 			    <p>
-			      <b>${comment.user.username} :</b>
+			      <b>${comment.username} :</b>
 			      ${comment.content}
 			    </p>
 			    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>

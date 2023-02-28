@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
 @Builder
@@ -26,33 +26,29 @@ public class Image {
     private String postImageUrl; //사진을 전송받아서 그 사진을 서버에 특정 폴더에 저장 -> db 에 그 저장된 경로를 insert
 
 
-    @JsonIgnoreProperties({"image"})
+
     @JoinColumn(name="userId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
 
-    @JsonIgnoreProperties({"image"})
+
     @OneToMany(mappedBy = "image")
     // 이미지 좋아요
     private List<Likes> likes;
 
 
     @OrderBy("id DESC")
-    @JsonIgnoreProperties({"image"})
     // 이미지 댓글
-    @OneToMany(mappedBy = "image",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "image")
     private List<Comment> comments;
 
     //좋아요 헀는지
 
-    private boolean likeState;
+    private String likeState;
 
 
     private long likeCount;
-
-
-
 
 
     private LocalDateTime createDate;
@@ -62,7 +58,7 @@ public class Image {
         this.createDate= LocalDateTime.now();
     }
 
-    public void setLikeState(boolean likeState) {
+    public void setLikeState(String likeState) {
         this.likeState = likeState;
     }
 

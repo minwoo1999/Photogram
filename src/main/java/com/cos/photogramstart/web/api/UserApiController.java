@@ -11,6 +11,7 @@ import com.cos.photogramstart.service.UserService;
 import com.cos.photogramstart.web.dto.CMResDto;
 import com.cos.photogramstart.web.dto.subscribe.subscribeResponseDto;
 import com.cos.photogramstart.web.dto.user.UserUpdateDto;
+import com.cos.photogramstart.web.dto.user.UserUpdateDtoRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,8 @@ public class UserApiController {
                                                    MultipartFile profileImageFile,
                                                    @AuthenticationPrincipal PrincipalDetails principalDetails){
 
-            User userEntity=userService.profileimageupdate(principalId,profileImageFile);
-            principalDetails.setUser(userEntity); //세션변경
+            userService.profileimageupdate(principalId,profileImageFile,principalDetails);
+
             return new ResponseEntity<>(new CMResDto<>(1,"프로필 사진변경 성공",null),HttpStatus.OK);
     }
 
@@ -59,10 +60,9 @@ public class UserApiController {
                               ){
 
 
-            User user = userService.memberUpdate(id, userUpdateDto);
-            principalDetails.setUser(user); //세션정보변경하기
-            return new CMResDto<>(1,"회원수정완료",user);// 응답시에 유저 엔티티의 모든 getter 함수가 호출되고 JSON으로 파싱하여 응답한다.
+        UserUpdateDtoRes userUpdateDtoRes = userService.memberUpdate(id, userUpdateDto, principalDetails);
 
+        return new CMResDto<>(1,"회원수정완료",userUpdateDtoRes);// 응답시에 유저 엔티티의 모든 getter 함수가 호출되고 JSON으로 파싱하여 응답한다.
 
 
     }

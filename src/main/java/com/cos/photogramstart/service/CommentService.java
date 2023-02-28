@@ -8,6 +8,7 @@ import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
 import com.cos.photogramstart.handler.ex.CustomApiException;
 import com.cos.photogramstart.handler.ex.CustomVaildationApiException;
+import com.cos.photogramstart.web.api.dto.CommentResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,16 +25,17 @@ public class CommentService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Comment applywrite(String content,long imageId,long userId){
+    public CommentResDto applywrite(String content,long imageId,long userId){
 
-        System.out.println(imageId+content+userId);
         //TIP (객체를 만들때 id 값만 담아서 insert 할 수 있다.)
         User user = userRepository.findById(userId).orElseThrow(()->{return new CustomApiException("찾을 수 없는 Id입니다");});
         Image image = imageRepository.findById(imageId).orElseThrow(()->{return new CustomApiException("찾을 수 없는 Id입니다");});
 
 
         Comment comment=new Comment(content,user,image);
-        return commentRepository.save(comment);
+        commentRepository.save(comment);
+        CommentResDto commentResDto =new CommentResDto(comment);
+        return commentResDto;
 
     }
 

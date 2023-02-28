@@ -1,5 +1,6 @@
 package com.cos.photogramstart.service;
 
+import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.subscribe.SubscribeRepository;
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
@@ -8,8 +9,10 @@ import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomVaildationApiException;
 import com.cos.photogramstart.web.dto.user.UserProfileDto;
 import com.cos.photogramstart.web.dto.user.UserUpdateDto;
+import com.cos.photogramstart.web.dto.user.UserUpdateDtoRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +67,7 @@ public class UserService {
     }
 
     @Transactional
-    public User memberUpdate(long id, UserUpdateDto userUpdateDto){
+    public UserUpdateDtoRes memberUpdate(long id, UserUpdateDto userUpdateDto,@AuthenticationPrincipal PrincipalDetails principalDetails){
         //1 영속화
         User userEntity=userRepository.findById(id).orElseThrow(()->{return new CustomVaildationApiException("찾을 수 없는 Id입니다");});
         //2.영속화된 오브젝트를 수정 - 더티체킹 (업데이트완료)
@@ -75,11 +78,17 @@ public class UserService {
                 userUpdateDto.getBio(),
                 userUpdateDto.getPhone(),
                 userUpdateDto.getGender());
-        return userEntity;
+        //3 principal 세션변경
+        principalDetails.setUser(userEntity);
+
+        //4. dto에 Entity데이터 담아주기
+        UserUpdateDtoRes userUpdateDtoRes=new UserUpdateDtoRes(userEntity);
+
+        return userUpdateDtoRes;
     }
 
     @Transactional
-    public User profileimageupdate(long principalId, MultipartFile profileImageFile) {
+    public User profileimageupdate(long principalId, MultipartFile profileImageFile,PrincipalDetails principalDetails) {
 
         UUID uuid = UUID.randomUUID();
         System.out.println("여기입니다"+profileImageFile);
@@ -97,6 +106,8 @@ public class UserService {
             throw new CustomApiException("유저를 찾을 수 없습니다");
         });
         userEntity.setProfileImageUrl(imageFileName);
+
+        principalDetails.setUser(userEntity); //세션변경
 
         return userEntity;
 
