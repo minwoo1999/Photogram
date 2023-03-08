@@ -1,10 +1,6 @@
 # 포토그램 - 인스타그램 기능구현
 
 
-https://user-images.githubusercontent.com/79193811/219348469-7488f0a5-7c6e-445c-b062-8d8a8b98876f.mp4
-
-
-
 ### 의존성
 
 - Sring Boot DevTools
