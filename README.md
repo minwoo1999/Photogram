@@ -1,5 +1,5 @@
 
-<img src="https://user-images.githubusercontent.com/79193811/223639968-27b39b89-da3d-4c6f-aa48-73ad89a04421.png  width="200" height="400"/> # 포토그램 - 인스타그램 기능구현
+<img src="https://user-images.githubusercontent.com/50612841/130802756-cc322b08-06e5-4847-959b-2bd28e6ef3de.jpeg" width="200" height="200"/>
 
 ### 의존성
 
