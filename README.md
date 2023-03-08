@@ -1,5 +1,5 @@
 
-<img src="https://user-images.githubusercontent.com/79193811/223640966-7b366515-8912-4052-aeae-f03f89291704.png" width="100" height="100"/> - # Photogram 
+# Photogram 
 
 ## 💡 Background
 * 학생들이 실시간으로 답변을 받기 힘든 현행 코딩 수업 구조 : TA 조교가 많은 학생들에 대한 모든 질문을 답변하기에는 꽤 큰 부담이며, 중복된 질문 또한 매우 많습니다. 결정적으로 질문과 답변이 이루어지는 시간이 다소 오래 걸립니다.
