@@ -1,5 +1,5 @@
 
-<img src="https://user-images.githubusercontent.com/50612841/130802756-cc322b08-06e5-4847-959b-2bd28e6ef3de.jpeg" width="200" height="200"/>
+<img src="https://user-images.githubusercontent.com/79193811/223640881-7260eff0-478b-4256-8e2f-0182d72075d3.png" width="200" height="200"/>
 
 ### 의존성
 
