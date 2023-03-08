@@ -1,93 +1,9 @@
 
 <img src="https://user-images.githubusercontent.com/79193811/223640966-7b366515-8912-4052-aeae-f03f89291704.png" width="100" height="100"/> - # Photogram 
 
-### 의존성
+## 💡 Background
+* 학생들이 실시간으로 답변을 받기 힘든 현행 코딩 수업 구조 : TA 조교가 많은 학생들에 대한 모든 질문을 답변하기에는 꽤 큰 부담이며, 중복된 질문 또한 매우 많습니다. 결정적으로 질문과 답변이 이루어지는 시간이 다소 오래 걸립니다.
+* 학습 자료를 찾는 어려움 : 코딩에 처음 접해 능숙하지 못한 학생의 경우 검색을 통해서 양질의 학습 자료를 찾는 것이 어려우며, 이에 시간이 오래 걸립니다.
+* TA 조교 인력의 부족 : 코딩 수업을 수강하는 학생 수에 비해 TA조교 인력이 부족함에 따라 다양한 문제점이 발생하고 있습니다.
+* 원활한 수업 관리의 어려움 : 현재 TA조교와 담당 학생과의 질문이 개인 카카오톡이나 오픈 채팅을 통해 이루어집니다. 이 때, TA조교의 사적인 영역을 침해할 우려가 크며 오픈 채팅과 같은 경우는 신원 확인이 어렵습니다.
 
-- Sring Boot DevTools
-- Lombok
-- Spring Data JPA
-- MariaDB Driver
-- Spring Security
-- Spring Web
-- oauth2-client
-
-```xml
-<!-- 시큐리티 태그 라이브러리 -->
-<dependency>
-	<groupId>org.springframework.security</groupId>
-	<artifactId>spring-security-taglibs</artifactId>
-</dependency>
-
-<!-- JSP 템플릿 엔진 -->
-<dependency>
-	<groupId>org.apache.tomcat</groupId>
-	<artifactId>tomcat-jasper</artifactId>
-	<version>9.0.43</version>
-</dependency>
-
-<!-- JSTL -->
-<dependency>
-	<groupId>javax.servlet</groupId>
-	<artifactId>jstl</artifactId>
-</dependency>
-```
-
-### 데이터베이스
-
-```sql
-create user 'cos'@'%' identified by 'cos1234';
-GRANT ALL PRIVILEGES ON *.* TO 'cos'@'%';
-create database photogram;
-```
-
-### yml 설정
-
-```yml
-server:
-  port: 8080
-  servlet:
-    context-path: /
-    encoding:
-      charset: utf-8
-      enabled: true
-    
-spring:
-  mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
-      
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/cos?serverTimezone=Asia/Seoul
-    username: cos
-    password: cos1234
-    
-  jpa:
-    open-in-view: true
-    hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
-      
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 2MB
-
-  security:
-    user:
-      name: test
-      password: 1234   
-
-file:
-  path: C:/src/springbootwork-sts/upload/
-```
-
-### 태그라이브러리
-
-```jsp
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-```
