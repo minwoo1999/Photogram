@@ -1,4 +1,5 @@
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/29de656a-8ab1-4d52-be67-d40d9de31b62/Untitled.png)
+![Photogram](https://user-images.githubusercontent.com/79193811/224052017-56253b95-e6d3-4ac7-a91d-9a1a66095eb4.PNG)
+
 
 ### **🔍 프로젝트 기간**
 
@@ -18,7 +19,8 @@
 
 ### **DATABASE Schema**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7986ce95-8870-4f57-9dc3-6c171d17ee60/Untitled.png)
+![image](https://user-images.githubusercontent.com/79193811/224051962-28b9ff05-63b4-4955-a4b0-b9d26a737c24.png)
+
 
 ## **💻 리팩토링 및 배운핵심기술**
 
