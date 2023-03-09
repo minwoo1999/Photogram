@@ -17,11 +17,7 @@
 ## 사용한 기술 및 라이브러리
 * BackEndTool: Spring DATA JPA 
 
-* Container : Docker
-
 * DB : MariaDb
-
-* Infra : AWS EC2
 
 * Auth: Session, Oauth2(facebook social login)
 
