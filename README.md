@@ -1,4 +1,4 @@
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/29de656a-8ab1-4d52-be67-d40d9de31b62/Untitled.png)
+
 
 ### **🔍 프로젝트 기간**
 
@@ -24,9 +24,10 @@
 
 ### **DATABASE Schema**
 
----
+![image](https://user-images.githubusercontent.com/79193811/224285007-2f06dc1c-67ca-4727-8078-f5d2509db375.png)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7986ce95-8870-4f57-9dc3-6c171d17ee60/Untitled.png)
+
+
 
 ## **💻 리팩토링 및 배운핵심기술**
 
