@@ -35,10 +35,10 @@ public class ImageApiController {
 
                                         @PageableDefault(size=3,sort="id",direction = Sort.Direction.DESC)Pageable pageable){
 
-        List<Image> images =  imageService.imageStory(principalDetails.getUser().getId(),offset,limit);
-        List<ImageResDto> collect = images.stream().map(i -> new ImageResDto(i)).collect(Collectors.toList());
+        List<ImageResDto> imageResDtos = imageService.imageStory(principalDetails.getUser().getId(), offset, limit);
 
-        return new ResponseEntity<>(new CMResDto<>(1,"성공",collect),HttpStatus.OK);
+
+        return new ResponseEntity<>(new CMResDto<>(1,"성공",imageResDtos),HttpStatus.OK);
     }
 
     @PostMapping("/api/image/{imageId}/likes")

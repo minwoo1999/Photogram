@@ -33,7 +33,7 @@ public class ImageService {
     private String uploadFolder;
 
     @Transactional(readOnly = true)
-    public List<Image> imageStory(long principalId, int offset,int limit){
+    public List<ImageResDto> imageStory(long principalId, int offset,int limit){
 
 //        Page<Image> images = imageRepository.mStory(principalId,pageable);
 //
@@ -65,8 +65,10 @@ public class ImageService {
             });
         });
 
+        List<ImageResDto> collect = resultList.stream().map(i -> new ImageResDto(i)).collect(Collectors.toList());
 
-        return resultList;
+
+        return collect;
 
     }
 
